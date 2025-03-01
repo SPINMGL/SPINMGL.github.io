@@ -1,3 +1,12 @@
+To modify your HTML code so that it requires the user to input a specific code format (like `RMT{YhTfbJlOWq}`) and displays a permanent placeholder text that cannot be deleted, you can use the following approach:
+
+1. Set a default value for the input field that matches the required format.
+2. Disable editing of that default value by using a `readonly` attribute.
+3. Add a validation function to check if the input matches one of the allowed codes.
+
+Here's the modified code:
+
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -100,7 +109,7 @@
     </div>
     
     <div id="codePopup" class="popup">
-        <input type="text" id="codeInput" placeholder="Masukkan Kode">
+        <input type="text" id="codeInput" value="RMT{masukkan kode di sini}" readonly>
         <button onclick="validateCode()">Submit</button>
     </div>
 
@@ -113,7 +122,7 @@
             <div class="spinBox">🎰</div>
             <div class="spinBox">🎰</div>
             <div class="spinBox">🎰</div>
-            <div class="spinBox">🎰</div>
+            <div class="spinBox"> 🎰</div>
         </div>
         <button id="spinButton" onclick="startSpin()">Spin</button>
     </div>
@@ -137,10 +146,34 @@
         }
         
         function validateCode() {
-            document.getElementById('codePopup').style.display = 'none';
-            document.getElementById('lobby').style.display = 'none';
-            document.getElementById('marquee').classList.remove('hidden');
-            document.getElementById('spinGame').style.display = 'block';
+            const inputCode = document.getElementById('codeInput').value;
+            const validCodes = [
+                "RMT{YhTfbJlOWq}", "RMT{XkLqzVnPjR}", "RMT{AqWbErTyUi}", 
+                "RMT{ZxCvBnMqLp}", "RMT{QwErTyUiOp}", "RMT{JkLhGfDsAq}", 
+                "RMT{VbNmQwErTy}", "RMT{PqRsTuVwXy}", "RMT{FgHjKlZxCv}", 
+                "RMT{YtUiOpAsDf}", "RMT{HjKlMnQwEr}", "RMT{ZxYvUtSrQw}", 
+                "RMT{QwErTyUiAs}", "RMT{XyZbNmQwEr}", "RMT{LkJgFhDqWz}", 
+                "RMT{PqWzXcVbNm}", "RMT{RjKfGhTqWz}", "RMT{QeRtYuIoPz}", 
+                "RMT{XcVbNmQwEr}", "RMT{AsDfGhJkLq}", "RMT{ZxCvBnMqLp}", 
+                "RMT{QwErTyUiOp}", "RMT{JkLhGfDsAq}", "RMT{VbNmQwErTy}", 
+                "RMT{FgHjKlZxCv}", "RMT{YtUiOpAsDf}", "RMT{HjKlMnQwEr}", 
+                "RMT{ZxYvUtSrQw}", "RMT{QwErTyUiAs}", "RMT{XyZbNmQwEr}", 
+                "RMT{LkJgFhDqWz}", "RMT{PqWzXcVbNm}", "RMT{RjKfGhTqWz}", 
+                "RMT{QeRtYuIoPz}", "RMT{XcVbNmQwEr}", "RMT{AsDfGhJkLq}", 
+                "RMT{ZxCvBnMqLp}", "RMT{QwErTyUiOp}", "RMT{JkLhGfDsAq}", 
+                "RMT{VbNmQwErTy}", "RMT{FgHjKlZxCv}", "RMT{YtUiOpAsDf}", 
+                "RMT{HjKlMnQwEr}", "RMT{ZxYvUtSrQw}", "RMT{QwErTyUiAs}", 
+                "RMT{XyZbNmQwEr}", "RMT{LkJgFhDqWz}", "RMT{PqWzXcVbNm}", 
+                "RMT{RjKfGhTqWz}", "RMT{QeRtYuIoPz}"
+            ];
+            if (validCodes.includes(inputCode)) {
+                document.getElementById('codePopup').style.display = 'none';
+                document.getElementById('lobby').style.display = 'none';
+                document.getElementById('marquee').classList.remove('hidden');
+                document.getElementById('spinGame').style.display = 'block';
+            } else {
+                alert('Kode tidak valid! Silakan coba lagi.');
+            }
         }
         
         function startSpin() {
@@ -148,8 +181,7 @@
                 document.getElementById('warningPopup').classList.remove('hidden');
                 return;
             }
-            hasSpun = true;
-            document.getElementById('spinButton').disabled = true;
+            hasSpun = true document.getElementById('spinButton').disabled = true;
             document.body.style.animation = 'disco 0.5s infinite';
             
             let spinBoxes = document.querySelectorAll('.spinBox');
